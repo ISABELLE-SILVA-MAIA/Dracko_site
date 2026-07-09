@@ -260,7 +260,6 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
       <div class="cta-row" style="margin:0">
         <button class="btn primary" data-go="contato">Quero ser avisado</button>
       </div>
-      <p id="beat-out" class="narrow" style="font-size:13px;color:var(--red-2);margin:12px 0 0"></p>
     </div>
   </section>
 </div>
@@ -271,13 +270,15 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
     <div class="contact-wrap">
       <div>
         <p class="lead" style="margin-top:0">Conta o que você precisa — sessão de estúdio, clipe, beat ou lançamento completo. A gente responde rápido.</p>
-        <div style="margin-top:24px">
-          <div class="field"><label>Nome</label><input id="f-name" placeholder="Seu nome / nome artístico"></div>
-          <div class="field"><label>E-mail ou WhatsApp</label><input id="f-contact" placeholder="dracko.estudios@gmail.com"></div>
-          <div class="field"><label>Mensagem</label><textarea id="f-msg" rows="4" placeholder="Sobre seu projeto..."></textarea></div>
-          <button class="btn primary" onclick="sendMsg()">Enviar mensagem</button>
-          <p id="f-out" class="narrow" style="font-size:13px;color:var(--red-2);margin-top:12px"></p>
-        </div>
+        <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contatoForm" style="margin-top:24px">
+          <input type="hidden" name="form-name" value="contato">
+          <p style="display:none"><label>Não preencha: <input name="bot-field"></label></p>
+          <div class="field"><label>Nome</label><input type="text" name="nome" required placeholder="Seu nome / nome artístico"></div>
+          <div class="field"><label>E-mail ou WhatsApp</label><input type="text" name="contato" required placeholder="seu@email.com ou (11) 90000-0000"></div>
+          <div class="field"><label>Mensagem</label><textarea name="mensagem" rows="4" required placeholder="Sobre seu projeto..."></textarea></div>
+          <button type="submit" class="btn primary">Enviar mensagem</button>
+          <p id="f-out" class="narrow" style="font-size:14px;color:var(--red-2);margin-top:14px;display:none">Valeu pelo contato! Recebemos sua mensagem e respondemos rápido. 🤝</p>
+        </form>
       </div>
       <div>
         <div class="socials">
@@ -369,18 +370,26 @@ document.querySelectorAll('.pl').forEach(btn=>{
       if(e>=1){stopAll();curBtn=null;return;}raf=requestAnimationFrame(tick);})();
   };
 });
-function notifyBeats(){
-  const out=document.getElementById('beat-out');
-  let email=prompt('Deixa seu e-mail que a gente te avisa quando sair beat novo:');
-  if(email===null)return;
-  email=email.trim();
-  const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  out.textContent = ok ? `Fechou! Vamos avisar ${email} assim que sair beat novo. (Conecte a uma lista de e-mail real depois.)` : 'Ops, esse e-mail não parece válido. Tenta de novo.';
-}
-function sendMsg(){
-  const n=document.getElementById('f-name').value.trim();
-  const out=document.getElementById('f-out');
-  out.textContent = n ? `Fechou, ${n}! É só conectar o formulário ao e-mail/WhatsApp da Dracko.` : 'Preenche teu nome pra enviar.';
+
+// Envio do formulário sem sair da página (Netlify Forms)
+const cForm=document.getElementById('contatoForm');
+if(cForm){
+  cForm.addEventListener('submit',e=>{
+    e.preventDefault();
+    const data=new URLSearchParams(new FormData(cForm)).toString();
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
+      .then(()=>{
+        const out=document.getElementById('f-out');
+        cForm.querySelectorAll('input,textarea,button').forEach(el=>{if(el.type!=='hidden')el.disabled=true});
+        out.style.display='block';
+        cForm.reset();
+      })
+      .catch(()=>{
+        const out=document.getElementById('f-out');
+        out.textContent='Deu um erro no envio. Tenta de novo ou chama no Instagram.';
+        out.style.display='block';
+      });
+  });
 }
 </script>
 </body>
