@@ -48,7 +48,7 @@ main{position:relative;z-index:1;padding-top:70px}
 section{padding:clamp(46px,7vw,88px) clamp(16px,5vw,56px);max-width:1280px;margin:0 auto}
 .eyebrow{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:12px;letter-spacing:4px;color:var(--red-2);text-transform:uppercase;margin-bottom:14px}
 h1,h2{font-family:'Anton',sans-serif;letter-spacing:1px;line-height:.92;font-weight:400}
-h1{margin-bottom:.12em}
+h1{margin-bottom:.4em}
 h1{font-size:clamp(46px,11vw,132px)}
 h2{font-size:clamp(32px,6vw,62px)}
 .lead{color:var(--muted);max-width:640px;font-size:clamp(15px,2.2vw,18px);margin-top:18px}
@@ -87,6 +87,8 @@ h2{font-size:clamp(32px,6vw,62px)}
   .artist.rev .artist-media,.artist.rev .artist-text{order:initial}
 }
 .clip{aspect-ratio:9/13;border:1px solid var(--line);border-radius:13px;overflow:hidden;position:relative;display:flex;align-items:flex-end;cursor:pointer;transition:.25s}
+.clip.yt{background-size:cover;background-position:center}
+.clip iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .clip:hover{border-color:var(--red);transform:scale(1.015)}
 .clip .ov{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.85))}
 .clip .play{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(225,21,21,.18);border:1px solid var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;z-index:2}
@@ -417,14 +419,29 @@ document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.g
 window.addEventListener('load',aimBlobs);
 window.addEventListener('resize',aimBlobs);
 const clips=[
-  {t:'TIRO NO ALVO',a:'Anjo005, Cassiano Franco, Ga Vieira, Jiraya · prod. Lucas Gons'},
+  {t:'TIRO NO ALVO',a:'Anjo005, Cassiano Franco, Ga Vieira, Jiraya · prod. Lucas Gons', yt:'PjrLnHYd-wM', start:0, end:30},
   {t:'ACABAR',a:'Lançamento Dracko'},
   {t:'DICHAVANDO MÚSICAS',a:'Mihara — Ga Vieira, Cassiano Franco'},
 ];
-document.getElementById('clips').innerHTML=clips.map((c,i)=>`
-  <div class="clip" style="background:linear-gradient(160deg,${['#2a0d10','#1a0d1a','#0d1420'][i]},#0c0a0c)">
+document.getElementById('clips').innerHTML=clips.map((c,i)=>{
+  if(c.yt){
+    return `<div class="clip yt" style="background-image:url(https://img.youtube.com/vi/${c.yt}/hqdefault.jpg)" data-yt="${c.yt}" data-start="${c.start||0}" data-end="${c.end||0}">
+      <div class="ov"></div><div class="play">▶</div>
+      <div class="meta"><b>${c.t}</b><small>${c.a}</small></div></div>`;
+  }
+  return `<div class="clip" style="background:linear-gradient(160deg,${['#2a0d10','#1a0d1a','#0d1420'][i]},#0c0a0c)">
     <div class="ov"></div><div class="play">▶</div>
-    <div class="meta"><b>${c.t}</b><small>${c.a}</small></div></div>`).join('');
+    <div class="meta"><b>${c.t}</b><small>${c.a}</small></div></div>`;
+}).join('');
+// Clique no clipe com link do YouTube: carrega o player já no trecho escolhido
+document.querySelectorAll('.clip.yt').forEach(el=>{
+  el.addEventListener('click',function(){
+    const id=this.dataset.yt, start=this.dataset.start, end=this.dataset.end;
+    let src=`https://www.youtube.com/embed/${id}?autoplay=1&start=${start}`;
+    if(end && end!=='0') src+=`&end=${end}`;
+    this.innerHTML=`<iframe src="${src}" allow="autoplay; encrypted-media" allowfullscreen title="Player de vídeo"></iframe>`;
+  });
+});
 const projs=[
   {t:'TIRO NO ALVO',a:'1º lançamento Dracko Streets · 4 feats'},
   {t:'SESSÕES DRACKO',a:'Performances ao vivo'},
