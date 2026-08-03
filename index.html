@@ -434,7 +434,15 @@ document.getElementById('clips').innerHTML=clips.map((c,i)=>{
 }).join('');
 // Clique no clipe com link do YouTube: carrega o player já no trecho escolhido
 document.querySelectorAll('.clip.yt').forEach(el=>{
+  el._original=el.innerHTML; // guarda a capa original para poder restaurar depois
   el.addEventListener('click',function(){
+    if(this.querySelector('iframe'))return; // já está tocando este, ignora novo clique
+    // para qualquer outro vídeo tocando e volta ele pra capa
+    document.querySelectorAll('.clip.yt').forEach(other=>{
+      if(other!==this && other.querySelector('iframe')){
+        other.innerHTML=other._original;
+      }
+    });
     const id=this.dataset.yt, start=this.dataset.start, end=this.dataset.end;
     let src=`https://www.youtube.com/embed/${id}?autoplay=1&start=${start}`;
     if(end && end!=='0') src+=`&end=${end}`;
