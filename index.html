@@ -119,9 +119,8 @@ h2{font-size:clamp(32px,6vw,62px)}
 .field.inline{display:flex;gap:10px;flex-wrap:wrap;width:100%;max-width:520px;margin:0}
 .field.inline input{flex:1;min-width:200px}
 .gallery-wrap{position:relative}
-.gallery{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding-bottom:10px;-webkit-overflow-scrolling:touch}
-.gallery::-webkit-scrollbar{height:6px}
-.gallery::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px}
+.gallery{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+.gallery::-webkit-scrollbar{display:none;height:0}
 .gallery img{scroll-snap-align:start;flex:0 0 auto;width:280px;height:360px;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--panel)}
 .gal-arrow{position:absolute;top:calc(50% - 5px);transform:translateY(-50%);z-index:5;width:40px;height:40px;border-radius:50%;background:rgba(10,10,12,.8);border:1px solid var(--red);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:.2s}
 .gal-arrow:hover{background:var(--red);box-shadow:var(--glow)}
@@ -351,14 +350,12 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
     <div class="eyebrow" style="margin-top:60px">Como a gente trabalha</div>
     <h2>DO ROTEIRO<br>AO CORTE FINAL.</h2>
     <div class="grid g2" style="margin-top:30px">
-      <div class="card"><div class="num">01</div><h3>Pré-produção</h3><p>Conceito visual, roteiro, locação e cronograma alinhados com o lançamento.</p></div>
-      <div class="card"><div class="num">02</div><h3>Captação</h3><p>Direção em set, câmera, luz e som. Registro com a estética da Dracko.</p></div>
-      <div class="card"><div class="num">03</div><h3>Pós-produção</h3><p>Edição, color e tratamento de áudio até a versão final.</p></div>
-      <div class="card"><div class="num">04</div><h3>Entrega</h3><p>Masters prontos pra YouTube, Instagram e plataformas.</p></div>
+      <div class="card"><h3>Pré-produção</h3><p>Conceito visual, roteiro, locação e cronograma alinhados com o lançamento.</p></div>
+      <div class="card"><h3>Captação</h3><p>Direção em set, câmera, luz e som. Registro com a estética da Dracko.</p></div>
+      <div class="card"><h3>Pós-produção</h3><p>Edição, color e tratamento de áudio até a versão final.</p></div>
     </div>
     <div class="eyebrow" style="margin-top:60px">Projetos</div>
     <h2>PORTFÓLIO.</h2>
-    <p class="note">▸ Substitua pelos projetos reais (ex: Tiro no Alvo, sessões, clipes).</p>
     <div class="grid g3" id="projects"></div>
     <div class="cta-row"><button class="btn primary" data-go="contato">Quero um projeto</button></div>
   </section>
@@ -388,7 +385,6 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
     </div>
     <div class="eyebrow" style="margin-top:60px">Pacotes de sessão</div>
     <h2>ESCOLHA<br>SEU TEMPO.</h2>
-    <p class="note">▸ Ajuste valores e o que cada pacote inclui conforme a real de vocês.</p>
     <div class="grid g3" style="margin-top:30px">
       <div class="price-card">
         <span class="tier">Express</span>
@@ -418,7 +414,6 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
     <div class="eyebrow">Catálogo de Beats</div>
     <h1>COMPRE SEU <span class="red">BEAT.</span></h1>
     <p class="lead">Beats autorais produzidos na Dracko, prontos pro seu próximo lançamento. Dá o play pra ouvir um preview e leva a licença que cabe no seu projeto.</p>
-    <p class="note">▸ Preview com tom de demonstração. Conecte seus áudios e o checkout reais depois.</p>
     <div class="beats" id="beatList"></div>
 
     <div class="beat-cta">
@@ -456,7 +451,6 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
           <a class="soc" href="mailto:dracko.estudios@gmail.com"><div class="ic">@</div><div><b>E-mail</b><span>dracko.estudios@gmail.com</span></div></a>
           <a class="soc" href="https://linktr.ee/drackostudioss" target="_blank"><div class="ic">↗</div><div><b>Linktree</b><span>linktr.ee/drackostudioss</span></div></a>
         </div>
-        <p class="note" style="margin-top:18px">▸ Confirme os @ e adicione WhatsApp se tiver número público.</p>
       </div>
     </div>
   </section>
