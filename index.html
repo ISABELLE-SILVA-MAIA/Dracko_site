@@ -80,6 +80,7 @@ h2{font-size:clamp(32px,6vw,62px)}
 .artist-photo::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(225,21,21,.14),transparent 65%)}
 .artist-photo span{font-family:'Archivo Narrow',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;border:1px dashed var(--line);padding:5px 12px;border-radius:20px;position:relative;z-index:1}
 .artist-photo svg{width:56px;height:56px;opacity:.35;position:relative;z-index:1}
+.artist-photo img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
 .artist-text p{color:var(--muted);font-size:15.5px;line-height:1.75}
 @media(max-width:780px){
   .artist,.artist.rev{grid-template-columns:1fr;gap:20px}
@@ -221,8 +222,7 @@ footer{border-top:1px solid var(--line);padding:30px clamp(16px,5vw,56px);text-a
       <div class="artist-media">
         <h3>Jiraya</h3>
         <div class="artist-photo">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.4c-3.5 0-10.4 1.7-10.4 5.2v2.2h20.8v-2.2c0-3.5-6.9-5.2-10.4-5.2z"/></svg>
-          <span>Foto em breve</span>
+          <img src="img/jiraya.jpg" alt="Jiraya, artista da Dracko" loading="lazy">
         </div>
       </div>
       <div class="artist-text">
